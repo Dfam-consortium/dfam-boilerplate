@@ -29,6 +29,10 @@ DISCLAIMER:
 """
 # TODO: 
 #    * Something...
+#
+# Style Guide: See Google Python Style Guide
+#    http://google.github.io/styleguide/pyguide.html
+#
 
 # Code comments
 
@@ -43,15 +47,32 @@ class TestClass:
         """
         f() - perform perfunctory hello world services
 
-        Parameters
-        ----------
-        arg1 : int
-               Does something cool
+        Non PEP 484 function with types documented in
+        the docstring.
 
-        Returns
-        -------
-        int  : foobar...
+        Args:
+            arg1 (int): Does something cool
+
+        Returns:
+            int  : foobar...
         """
         return 'hello world'
+
+
+    def g(param1: int, param2: str) -> bool:
+        """
+        g() - perform perfunctory hello world services
+
+        PEP 484 function with types documented in the
+        definition -- no need to include in docstring.
+
+        Args:
+            param1: Does something cool
+            param2: Another cool parameter
+
+        Returns:
+            Boolean value indicating success.
+        """
+        return True
 
 

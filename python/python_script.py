@@ -40,6 +40,9 @@ DISCLAIMER:
 # TODO: 
 #    * Something...
 #
+# Style Guide: See Google Python Style Guide
+#     http://google.github.io/styleguide/pyguide.html
+#
 
 #
 # Module imports
@@ -50,7 +53,16 @@ import argparse
 
 
 def _usage():
-    """Print out docstring as program usage"""
+    """
+    _usage() - Print out docstring for this file
+
+    Args:
+        None
+
+    Returns:
+        Calls help/pydoc with screen pager on this script file
+        and exits normally afterwards.
+    """
     # Call to help/pydoc with scriptname ( sans path and file extension )
     help(os.path.splitext(os.path.basename(__file__))[0])
     sys.exit(0)
@@ -73,11 +85,14 @@ def main(*args):
     #   produced by '-h' or '--help' using the argparse
     #   custom action class ( _CustomUsageAction ) defined
     #   below.  If you want the paired-down argparse default
-    #   instead simply remove the "add_help=False" argument
+    #   instead, simply remove the "add_help=False" argument
     #   to the argparse constructor below and comment out
-    #   the add_argment('-h', ...) line below.
+    #   the add_argment('-h', ...) line.
     #
     class _CustomUsageAction(argparse.Action):
+        """
+        _CustomUsageAction() - Class to call our _usage function
+        """
         def __init__(self, option_strings, dest, default=False, required=False, help=None):
             super(_CustomUsageAction, self).__init__( 
                       option_strings=option_strings, dest=dest,
