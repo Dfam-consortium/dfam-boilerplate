@@ -3,12 +3,10 @@
     Blah...
 
 SEE ALSO: related_module.py
+          Dfam: http://www.dfam.org
 
 AUTHOR(S):
-    Robert Hubley <rhubley@systemsbiology.org>
-
-COPYRIGHT:
-    Copyright 2018 Robert Hubley, Institute for Systems Biology
+    Firstname Lastname <email@domain>
 
 LICENSE:
     This code may be used in accordance with the Creative Commons
@@ -19,7 +17,7 @@ DISCLAIMER:
   This software is provided ``AS IS'' and any express or implied
   warranties, including, but not limited to, the implied warranties of
   merchantability and fitness for a particular purpose, are disclaimed.
-  In no event shall the authors or the Institute for Systems Biology
+  In no event shall the authors or the Dfam consortium members be
   liable for any direct, indirect, incidental, special, exemplary, or
   consequential damages (including, but not limited to, procurement of
   substitute goods or services; loss of use, data, or profits; or
