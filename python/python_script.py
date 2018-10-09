@@ -41,7 +41,7 @@ DISCLAIMER:
 #    * Something...
 #
 # Style Guide: See Google Python Style Guide
-#     http://google.github.io/styleguide/pyguide.html
+#     https://github.com/google/styleguide/blob/gh-pages/pyguide.md
 #
 
 #
