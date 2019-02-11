@@ -46,11 +46,20 @@ DISCLAIMER:
 
 #
 # Module imports
-# e.g 'from python_module import TestClass'
+# 
 import sys
 import os
+import time
+import datetime
+import logging
 import argparse
 
+#
+# libs
+#
+sys.path.append(os.path.join(os.path.dirname(__file__), "../Lib"))
+
+LOGGER = logging.getLogger(__name__)
 
 def _usage():
     """
@@ -103,17 +112,31 @@ def main(*args):
 
     parser = argparse.ArgumentParser(add_help=False )
     parser.add_argument('-h', '--help', action=_CustomUsageAction )
+    parser.add_argument("-l", "--log-level", default="INFO")
+    parser.add_argument('-c', '--dfam_config', dest='dfam_config')
     # Example anonymous arguments:
     #   parser.add_argument('integers', metavar='N', type=int, nargs='+')
     # Example list value argument:
     #   parser.add_argument('--sum', dest='accumulate', action='store_const',
     #               const=sum, default=max)
-
     args = parser.parse_args()
+
+    # Setup logging and script timing
+    logging.basicConfig()
+    logging.getLogger().setLevel(getattr(logging, args.log_level.upper()))
+    start_time = time.time()
+
+    # Open up the Dfam config
+    conf = dc.DfamConfig(args.dfam_config)
+
+    LOGGER.info("#\n# python_script.py\n#")
 
     #
     # Remaining main() code
     #
+
+    end_time = time.time()
+    LOGGER.info("Run time: " + str(datetime.timedelta(seconds=end_time-start_time)))
 
 
 
