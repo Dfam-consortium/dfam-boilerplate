@@ -5,7 +5,7 @@
                               -myarg2=bar
 
     Blah...this is a very detailed explanation of the
-    this script.  
+    this script.
 
     Args:
         --help, -h  : show this help message and exit
@@ -103,12 +103,20 @@ def main(*args):
 
     parser = argparse.ArgumentParser(add_help=False )
     parser.add_argument('-h', '--help', action=_CustomUsageAction )
-    # Example anonymous arguments:
-    #   parser.add_argument('integers', metavar='N', type=int, nargs='+')
-    # Example list value argument:
-    #   parser.add_argument('--sum', dest='accumulate', action='store_const',
-    #               const=sum, default=max)
-
+    #
+    # Examples:
+    #   e.g. -f 3
+    #     parser.add_argument('-f','--foo', type=int, default=42, help='FOO!')
+    #   e.g. -f   : If set store True in args.foo
+    #     parser.add_argument('-f','--foo', action='store_true')
+    #   e.g. Set the -foo parameter as required
+    #     parser.add_argument('-f','--foo', type=int, required=True )
+    #   e.g. Set the args.foobar using the parameter passed with -foo
+    #     parser.add_argument('-f','--foo', dest='foobar', type=int )
+    #   e.g. Mutual exclusivity
+    #     action = parser.add_mutually_exclusive_group(required=True)
+    #     action.add_argument(...)
+    #
     args = parser.parse_args()
 
     #
