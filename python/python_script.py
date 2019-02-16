@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 """
-    Usage: ./python-script.py [--help] -myarg1=foo 
+    Usage: ./python-script.py [--help] -myarg1=foo
                               -myarg2=bar
 
     Blah...this is a very detailed explanation of the
@@ -37,8 +37,6 @@ DISCLAIMER:
   if advised of the possibility of such damage.
 
 """
-# TODO: 
-#    * Something...
 #
 # Style Guide: See Google Python Style Guide
 #     https://github.com/google/styleguide/blob/gh-pages/pyguide.md
@@ -46,7 +44,7 @@ DISCLAIMER:
 
 #
 # Module imports
-# 
+#
 import sys
 import os
 import time
@@ -54,10 +52,27 @@ import datetime
 import logging
 import argparse
 
-#
-# libs
-#
+# Import SQLAlchemy
+#from sqlalchemy import create_engine
+#from sqlalchemy.orm import sessionmaker
+#from sqlalchemy.orm import load_only
+#from sqlalchemy import select
+#from sqlalchemy import func
+#from sqlalchemy import update
+#from sqlalchemy import text
+#from sqlalchemy import column
+#from sqlalchemy import Integer
+#from sqlalchemy import String
+
+# Import our schemas
+#sys.path.append(os.path.join(os.path.dirname(__file__), "../Schemata/ORMs/python"))
+#import dfamorm as dfORM
+#import assemblydborm as adORM
+
+# Import Dfam Libraries
 sys.path.append(os.path.join(os.path.dirname(__file__), "../Lib"))
+import DfamConfig as dfConfig
+#import DfamDBView as dfView
 
 LOGGER = logging.getLogger(__name__)
 
@@ -131,12 +146,12 @@ def main(*args):
     args = parser.parse_args()
 
     # Setup logging and script timing
-    logging.basicConfig()
+    logging.basicConfig(format='')
     logging.getLogger().setLevel(getattr(logging, args.log_level.upper()))
     start_time = time.time()
 
     # Open up the Dfam config
-    conf = dc.DfamConfig(args.dfam_config)
+    conf = dfConfig.DfamConfig(args.dfam_config)
 
     LOGGER.info("#\n# python_script.py\n#")
 
