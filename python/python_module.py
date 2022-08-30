@@ -1,6 +1,14 @@
 # -*- coding: utf-8 -*-
 """
-    Blah...
+    Dfam boilier plate for a module/object
+
+    The Dfam project has settled on using the Black
+    styleguide ( https://black.readthedocs.io ).
+
+    NOTE: This is more of a placeholder as we don't currently need
+          to standardize a module/class object at this time.  Please
+          refer to the dfam_python_script.py boilerplate for current
+          Dfam-specific boilerplate.
 
 SEE ALSO: related_module.py
           Dfam: http://www.dfam.org
@@ -27,16 +35,11 @@ DISCLAIMER:
   if advised of the possibility of such damage.
 
 """
-# TODO: 
-#    * Something...
-#
-# Style Guide: See Google Python Style Guide
-#    https://github.com/google/styleguide/blob/gh-pages/pyguide.md
-#
 
 # Code comments
 
 class TestClass:
+
     def __init__(self):
         """TestClass() - basic constructor"""
         self.data = []

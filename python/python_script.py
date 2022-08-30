@@ -1,11 +1,16 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 """
-    Usage: ./python-script.py [--help] -myarg1=foo
-                              -myarg2=bar
+    Usage: ./python-script.py [--help] --myarg1=foo
+                              --myarg2=bar
 
-    Blah...this is a very detailed explanation of the
-    this script.
+    This is a boilerplate script for Dfam Server scripts.
+    It utilizes both the Dfam Configuration and Dfam Version
+    frameworks and defines several command line shortcuts
+    so that they remain as consistent as possible.
+
+    The Dfam project has settled on using the Black
+    styleguide ( https://black.readthedocs.io ).
 
     Args:
         --help, -h  : show this help message and exit
@@ -49,30 +54,31 @@ import sys
 import os
 import time
 import datetime
-import logging
 import argparse
+import logging
 
 # Import SQLAlchemy
-#from sqlalchemy import create_engine
-#from sqlalchemy.orm import sessionmaker
-#from sqlalchemy.orm import load_only
-#from sqlalchemy import select
-#from sqlalchemy import func
-#from sqlalchemy import update
-#from sqlalchemy import text
-#from sqlalchemy import column
-#from sqlalchemy import Integer
-#from sqlalchemy import String
+# from sqlalchemy import create_engine
+# from sqlalchemy.orm import sessionmaker
+# from sqlalchemy.orm import load_only
+# from sqlalchemy import select
+# from sqlalchemy import func
+# from sqlalchemy import update
+# from sqlalchemy import text
+# from sqlalchemy import column
+# from sqlalchemy import Integer
+# from sqlalchemy import String
 
 # Import our schemas
-#sys.path.append(os.path.join(os.path.dirname(__file__), "../Schemata/ORMs/python"))
-#import dfamorm as dfORM
-#import assemblydborm as adORM
+# sys.path.append(os.path.join(os.path.dirname(__file__), "../Schemata/ORMs/python"))
+# import dfamorm as dfORM
+# import assemblydborm as adORM
 
 # Import Dfam Libraries
 sys.path.append(os.path.join(os.path.dirname(__file__), "../Lib"))
 import DfamConfig as dfConfig
-#import DfamDBView as dfView
+import DfamVersion as dfVersion
+# import DfamDBView as dfView
 
 LOGGER = logging.getLogger(__name__)
 
@@ -91,6 +97,7 @@ def _usage():
     help(os.path.splitext(os.path.basename(__file__))[0])
     sys.exit(0)
 
+
 #
 # Other subroutines here
 #
@@ -102,9 +109,9 @@ def main(*args):
     #
     # Options processing
     #
-    #   There are two ways to document usage/command line 
+    #   There are two ways to document usage/command line
     #   arguments using this boilerplate.  The intended way
-    #   is to document using docstrings at the top of the 
+    #   is to document using docstrings at the top of the
     #   script.  This way the pydoc docs match the output
     #   produced by '-h' or '--help' using the argparse
     #   custom action class ( _CustomUsageAction ) defined
@@ -117,18 +124,28 @@ def main(*args):
         """
         _CustomUsageAction() - Class to call our _usage function
         """
-        def __init__(self, option_strings, dest, default=False, required=False, help=None):
-            super(_CustomUsageAction, self).__init__( 
-                      option_strings=option_strings, dest=dest,
-                      nargs=0, const=True, default=default,
-                      required=required, help=help) 
+
+        def __init__(
+            self, option_strings, dest, default=False, required=False, help=None
+        ):
+            super(_CustomUsageAction, self).__init__(
+                option_strings=option_strings,
+                dest=dest,
+                nargs=0,
+                const=True,
+                default=default,
+                required=required,
+                help=help,
+            )
+
         def __call__(self, parser, args, values, option_string=None):
             _usage()
 
-    parser = argparse.ArgumentParser(add_help=False )
-    parser.add_argument('-h', '--help', action=_CustomUsageAction )
+    parser = argparse.ArgumentParser(add_help=False)
+    parser.add_argument("-h", "--help", action=_CustomUsageAction)
     parser.add_argument("-l", "--log-level", default="INFO")
-    parser.add_argument('-c', '--dfam_config', dest='dfam_config')
+    parser.add_argument("-c", "--dfam_config", dest="dfam_config")
+    parser.add_argument("-v", "--version", dest="get_version", action="store_true")
     # Examples:
     #   e.g. -f 3
     #     parser.add_argument('-f','--foo', type=int, default=42, help='FOO!')
@@ -146,27 +163,34 @@ def main(*args):
     args = parser.parse_args()
 
     # Setup logging and script timing
-    logging.basicConfig(format='')
+    logging.basicConfig(stream=sys.stdout, format="")
     logging.getLogger().setLevel(getattr(logging, args.log_level.upper()))
     start_time = time.time()
 
     # Open up the Dfam config
     conf = dfConfig.DfamConfig(args.dfam_config)
+    df_ver = dfVersion.DfamVersion()
 
+    # If the only the version is needed
+    if args.get_version:
+        LOGGER.info(df_ver.version_string)
+        exit(0)
+
+    # Announce ourselves
     LOGGER.info("#\n# python_script.py\n#")
+    LOGGER.info("# version: " + version)
 
     #
     # Remaining main() code
     #
 
     end_time = time.time()
-    LOGGER.info("Run time: " + str(datetime.timedelta(seconds=end_time-start_time)))
-
+    LOGGER.info("Run time: " + str(datetime.timedelta(seconds=end_time - start_time)))
 
 
 #
 # Wrap script functionality in main() to avoid automatic execution
 # when imported ( e.g. when help is called on file )
 #
-if __name__ == '__main__':
+if __name__ == "__main__":
     main(*sys.argv)
